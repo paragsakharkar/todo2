@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TODO</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        outline: 0;
+      }
+
+      body {
+       background-image: url(https://images.pexels.com/photos/1684149/pexels-photo-1684149.jpeg?cs=srgb&dl=pexels-daria-obymaha-1684149.jpg&fm=jpg);
+      }
+
+      .container {
+        position: absolute;
+        left: 39%;
+        top: 15%;
+        transform: trasnlate(-50%, -50%);
+        background-color: transparent;
+        width: 460px;
+        height: 600px;
+        text-align: center;
+       font-family: cursive;
+      }
+
+      h1 {
+        margin: 12px 0;
+        color: rgb(9, 172, 31);
+      }
+
+      .add-element {
+        margin: 12px 0;
+      }
+
+      input {
+        padding: 6px 4px;
+        width: 70%;
+      }
+
+      #add_task_button {
+        padding: 7px 14px;
+        background-color: #770699;
+        border: none;
+        border-radius: 4px;
+        color: #d3d7db;
+      }
+
+      .element-list {
+        height: 550px;
+        overflow-y: auto;
+      }
+
+      ul {
+        padding: 15px;
+      }
+      li {
+        list-style: none;
+        padding: 10px 5px;
+        background-color: rgb(204, 25, 240);
+        margin: 12px 0;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 3px;
+        transition: 0.4s;
+      }
+
+      button:hover {
+        background-color: #e434cc;
+      }
+
+      li:hover {
+        background-color: #b9aeae;
+      }
+
+      .checked {
+        text-decoration: none;
+        background-color: #ffffff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>WHAT TO DO LIST (ADD/DELETE)</h1>
+
+      <div class="add-element">
+        <input type="text" name="task" placeholder="enter task" id="todo" />
+        <button id="add_task_button">ADD TASK</button>
+      </div>
+
+      <div class="element-list">
+        <ul id="task_list">
+        
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      let tasks = []
+
+     
+      let btn = document.getElementById('add_task_button')
+
+   
+      let delete_task = function (event) {
+        let id = event.target.id
+     
+
+        let element_id = `li_${id}`
+       
+
+        let elem = document.getElementById(element_id)
+
+        console.log(elem)
+
+        elem.remove()
+
+        
+        let arr = id.split('_')
+        let index = arr[1]
+       
+        console.log('index ', index)
+
+      
+
+        tasks.splice(index, 1)
+        
+      }
+
+      let edit_task = function (event) {
+    
+        let id = event.target.id
+
+      
+        let index = id.split('_')[1]
+       
+
+        let edit_task = prompt('enter updated task')
+      
+
+        tasks[index] = edit_task
+       
+
+        display()
+       
+      }
+
+    
+      let display = function () {
+        let ul = document.getElementById('task_list')
+       
+
+        ul.innerText = ''
+
+        for (let i = 0; i < tasks.length; i++) {
+          let single_task = tasks[i]
+
+          let new_elem = document.createElement('li')
+
+          new_elem.innerText = single_task
+        
+         
+          let btn = document.createElement('button')
+          btn.innerText = '🚮'
+        
+          btn.addEventListener('click', delete_task)
+
+          let edit_btn = document.createElement('button')
+        
+
+          edit_btn.innerText = '🆕'
+         
+
+          edit_btn.addEventListener('click', edit_task)
+       
+
+          edit_btn.id = `edit_${i}`
+        
+          btn.id = `btn_${i}`
+         
+
+          new_elem.id = `li_btn_${i}`
+        
+
+          new_elem.appendChild(btn)
+        
+
+          new_elem.appendChild(edit_btn)
+         
+
+          ul.appendChild(new_elem)
+        }
+      }
+
+      let fn = function () {
+       
+        let input = document.getElementsByName('task')[0].value
+
+        tasks.push(input)
+
+        display()
+       
+      } 
+      btn.addEventListener('click', fn)
+    </script>
+  </body>
+</html>
